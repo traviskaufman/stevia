@@ -1,0 +1,14 @@
+{
+  "name": "steviaJS",
+  "version": "0.0.1",
+  "description": "Experimental Library providing natural sweetening for javascript objects",
+  "keywords": [],
+  "author": "Travis Kaufman <travis.kaufman@gmail.com>",
+  "repository": { "type": "git", "url": "git://github.com/traviskaufman/steviaJS.git" },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "main": "index"
+}
