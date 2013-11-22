@@ -1,19 +1,30 @@
 {
-  "name": "steviaJS",
+  "name": "stevia",
   "version": "0.0.1",
   "description": "Experimental Library providing natural sweetening for javascript objects",
-  "keywords": [],
+  "keywords": [
+    "es6",
+    "proxies",
+    "experimental",
+    "enhancing",
+    "sweetening"
+  ],
   "author": "Travis Kaufman <travis.kaufman@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/traviskaufman/steviaJS.git"
+    "url": "git://github.com/traviskaufman/stevia.git"
   },
   "dependencies": {
     "harmony-reflect": "0.0.11"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "mocha": "~1.14.0",
+    "chai": "~1.8.1",
+    "sinon": "~1.7.3",
+    "jshint": "~2.3.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/jshint lib/ test/ && ./node_modules/.bin/mocha --harmony --reporter spec --require test/init test/*.spec.js"
   },
   "main": "index"
 }

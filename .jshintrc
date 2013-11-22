@@ -1,0 +1,16 @@
+{
+  "maxlen": 80,
+  "globalstrict": true,
+  "predef": [
+    "describe",
+    "it",
+    "assert",
+    "beforeEach",
+    "afterEach",
+    "Proxy",
+    "BASE_DIR",
+    "sinon"
+  ],
+  "browser": true,
+  "node": true
+}
