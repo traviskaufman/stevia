@@ -12,5 +12,6 @@
     "sinon"
   ],
   "browser": true,
-  "node": true
+  "node": true,
+  "trailing": true
 }

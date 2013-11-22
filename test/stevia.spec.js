@@ -2,7 +2,7 @@
 
 var stevia = require(BASE_DIR + '/lib/stevia');
 
-describe('stevia', function() { 
+describe('stevia', function() {
 
   var dude, fn;
 
@@ -13,8 +13,8 @@ describe('stevia', function() {
     
     fn = function(o) {
       return {
-        sweet: function() { 
-          return  o.dude + ' SWEET!'; 
+        sweet: function() {
+          return  o.dude + ' SWEET!';
         }
       };
     };
@@ -25,7 +25,7 @@ describe('stevia', function() {
     var sweet, realSweet;
     
     beforeEach(function() {
-      sweet = stevia.sweeten(dude, fn);  
+      sweet = stevia.sweeten(dude, fn);
       realSweet = fn({
         dude: 'dude!'
       });
@@ -38,7 +38,7 @@ describe('stevia', function() {
         assert.strictEqual(sweet.sweet(), realSweet.sweet());
       });
 
-      it('passes along any additional parameters as positional args ' + 
+      it('passes along any additional parameters as positional args ' +
          'to the middleware', function() {
         var middleware = sinon.spy();
         var arg1 = {}, arg2 = 'hello';
@@ -65,7 +65,7 @@ describe('stevia', function() {
 
     });
 
-    describe('sweetening with predefined middleware ("ingredients")', 
+    describe('sweetening with predefined middleware ("ingredients")',
              function() {
       
       function DudeMonad(o) {
@@ -86,7 +86,7 @@ describe('stevia', function() {
       DudeMonad.prototype.any = function(iterator, ctx) {
         return this.reduce(function(bool, p) {
           return Boolean(bool || iterator.call(ctx, p));
-        }, false, ctx); 
+        }, false, ctx);
       };
 
       beforeEach(function() {
@@ -98,8 +98,8 @@ describe('stevia', function() {
       it('uses stevia.ingredients[arg] function to sweeten if the second ' +
          'arg is a string', function() {
         assert.isTrue(
-          stevia.sweeten(dude, 'dudeMonads').any(function(char) { 
-            return char === '!'; 
+          stevia.sweeten(dude, 'dudeMonads').any(function(char) {
+            return char === '!';
           })
         );
       });
@@ -135,6 +135,6 @@ describe('stevia', function() {
 
     });
 
-  }); 
+  });
 
 });
