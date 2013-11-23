@@ -40,9 +40,12 @@ describe('stevia', function() {
 
       it('passes along any additional parameters as positional args ' +
          'to the middleware', function() {
-        var middleware = sinon.spy();
+        var middleware = sinon.spy(function() {
+          return {sweet: function() {}};
+        });
         var arg1 = {}, arg2 = 'hello';
-        stevia.sweeten(dude, middleware, arg1, arg2);
+        sweet = stevia.sweeten(dude, middleware, arg1, arg2);
+        sweet.sweet();
         sinon.assert.calledWithExactly(middleware, dude, arg1, arg2);
       });
 
