@@ -1,2 +1,1 @@
-
-module.exports = require('./lib/steviaJS');
+module.exports = require('./lib/stevia');
