@@ -1,38 +1,66 @@
-// TODO: move to src/ dir add es6 build step and ES6 syntax
-'use strict';
+(function(global) {
+  'use strict';
 
-var r = require('harmony-reflect');
+  var Reflect;
+  var isCommonJS = false;
+  var stevia;
 
-exports.sweeten = function(obj, sweetenFn) {
-
-  if (typeof sweetenFn === 'function') {
-    return mkProxy(obj, sweetenFn);
-  }
-
-  if (typeof sweetenFn !== 'string') {
-    throw new Error(
-        '(sweeten) Pass in either a string or a function as a ' +
-        'second argument'
-    );
-  }
-
-  if (r.hasOwn(exports.ingredients, sweetenFn)) {
-    return mkProxy(obj, exports.ingredients[sweetenFn]);
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    isCommonJS = true;
+    Reflect = require('harmony-reflect');
   } else {
+    Reflect = global.Reflect;
+  }
+
+  if (typeof Reflect !== 'object' || Reflect === null) {
     throw new Error(
-        '(sweeten) don\'t know how to sweeten with "' + sweetenFn + '"'
+      'harmony-reflect is required for this stevia to work correctly'
     );
   }
 
-};
+  var { has, hasOwn } = Reflect;
 
-function mkProxy(obj, fn) {
-  return new Proxy(obj, {
-    get: function(target, name) {
-      if (r.has(target, name)) return target[name];
-      return fn(obj)[name];
+  stevia = {
+    ingredients: Object.create(null),
+    sweeten(obj, sweetenFn, ...args) {
+
+      var ingredient;
+
+      if (typeof sweetenFn === 'string') {
+        ingredient = sweetenFn;
+        sweetenFn = stevia.ingredients[ingredient];
+      } else if (typeof sweetenFn !== 'function') {
+        throw new Error(
+            '(sweeten) Pass in either a string or a function as a ' +
+            'second argument'
+        );
+      }
+
+      if (typeof sweetenFn === 'function') {
+        return mkProxy(obj, sweetenFn, ...args);
+      }
+
+      throw new Error(
+          '(sweeten) don\'t know how to sweeten with "' + ingredient + '"'
+      );
     }
-  });
-}
+  };
 
-exports.ingredients = Object.create(null);
+  function mkProxy(obj, fn, ...args) {
+    return new Proxy(obj, {
+      get: function(target, name) {
+        if (has(target, name)) {
+          return target[name];
+        }
+        return fn(obj, ...args)[name];
+      }
+    });
+  }
+
+  if (isCommonJS) {
+    module.exports = stevia;
+  } else {
+    global.stevia = stevia;
+  }
+
+})(this);
