@@ -1,6 +1,7 @@
 {
   "maxlen": 80,
   "globalstrict": true,
+  "esnext": true,
   "predef": [
     "describe",
     "it",

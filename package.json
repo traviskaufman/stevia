@@ -21,10 +21,13 @@
     "mocha": "~1.14.0",
     "chai": "~1.8.1",
     "sinon": "~1.7.3",
-    "jshint": "~2.3.0"
+    "jshint": "~2.3.0",
+    "traceur": "0.0.6"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jshint lib/ test/ && ./node_modules/.bin/mocha --harmony --reporter spec --require test/init test/*.spec.js"
+    "pretest": "./node_modules/.bin/traceur --out lib/stevia.js src/stevia.js",
+    "prepublish": "./node_modules/.bin/traceur --out lib/stevia.js src/stevia.js",
+    "test": "./node_modules/.bin/jshint src/ test/ && ./node_modules/.bin/mocha --harmony --reporter spec --require test/init test/*.spec.js"
   },
   "main": "index"
 }
