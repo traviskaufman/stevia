@@ -90,7 +90,7 @@ This module relies on [ES6 Proxies](http://wiki.ecmascript.org/doku.php?id=harmo
 and the [ES6 Reflect API](http://wiki.ecmascript.org/doku.php?id=harmony:reflect_api) in order to
 function correctly.
 
-In NodeJS, you can simply run `node --harmony-proxies`, or simply `node --harmony`, and the
+In NodeJS, you can simply run `node --harmony`, and the
 module should work. In CommonJS environments the module internally requires `harmony-reflect` so
 you don't have to worry about including it yourself.
 
