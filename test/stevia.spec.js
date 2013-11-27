@@ -10,7 +10,7 @@ describe('stevia', function() {
     dude = {
       dude: 'dude!'
     };
-    
+
     fn = function(o) {
       return {
         sweet: function() {
@@ -23,7 +23,7 @@ describe('stevia', function() {
   describe('#sweeten', function() {
 
     var sweet, realSweet;
-    
+
     beforeEach(function() {
       sweet = stevia.sweeten(dude, fn);
       realSweet = fn({
@@ -70,11 +70,11 @@ describe('stevia', function() {
 
     describe('sweetening with predefined middleware ("ingredients")',
              function() {
-      
+
       function DudeMonad(o) {
         this._wrapped = o;
       }
-      
+
       DudeMonad.prototype.reduce = function(collector, initial, ctx) {
         var pieces = this._wrapped.dude.split('');
         var i, piece;
@@ -134,6 +134,40 @@ describe('stevia', function() {
       it('honors properties on the original object\'s prototype over ' +
          'the wrapped object', function() {
         assert.strictEqual(sweet.toString(), dude.toString());
+      });
+
+    });
+
+  });
+
+  describe('edge cases', function() {
+
+    describe('dates', function() {
+      var date, sweetDate;
+
+      beforeEach(function() {
+        date = new Date('Wed Nov 27 2013 17:59:00 GMT-0500 (EST)');
+        sweetDate = stevia.sweeten(date, function(o) {
+          return {
+            toEuroString: function() {
+              return [
+                o.getDate(), o.getMonth() + 1, +o.getYear() + 1900
+              ].join('/');
+            }
+          };
+        });
+      });
+
+      it('works when the extended method is called on the object', function() {
+        assert.strictEqual(
+          sweetDate.toEuroString(), '27/11/2013',
+          'Sweetened method did not work!'
+        );
+      });
+
+      it('works when a native date method is called on the sweetened object',
+          function() {
+        assert.equal(sweetDate.getDate(), 27);
       });
 
     });
