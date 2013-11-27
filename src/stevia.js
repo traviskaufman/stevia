@@ -1,3 +1,8 @@
+/**
+ * stevia.js: Natural Sweetener for Javascript Object.
+ * @author Travis Kaufman <travis.kaufman@gmail.com>
+ * @license MIT
+ */
 (function(global) {
   'use strict';
 
@@ -14,16 +19,19 @@
 
   if (typeof Reflect !== 'object' || Reflect === null) {
     throw new Error(
-      'harmony-reflect is required for this stevia to work correctly'
+      'harmony-reflect is required for stevia to work correctly'
     );
   }
 
   var { has, hasOwn } = Reflect;
 
   stevia = {
+
     ingredients: Object.create(null),
+
     sweeten(obj, sweetenFn, ...args) {
 
+      // Used for logging useful error messages if sweetenFn is a string
       var ingredient;
 
       if (typeof sweetenFn === 'string') {
@@ -44,12 +52,17 @@
           '(sweeten) don\'t know how to sweeten with "' + ingredient + '"'
       );
     }
+
   };
 
   function mkProxy(obj, fn, ...args) {
     return new Proxy(obj, {
       get: function(target, name) {
         if (has(target, name)) {
+          if (typeof target[name] === 'function') {
+            return target[name].bind(target);
+          }
+
           return target[name];
         }
         return fn(obj, ...args)[name];
