@@ -8,7 +8,7 @@ Imagine you're working with a module that does something like this:
 ```javascript
 module.doSomethingWithElement = function(el) {
   // Do some stuff...
-  document.appendChild(el);
+  document.body.appendChild(el);
 }
 ```
 
